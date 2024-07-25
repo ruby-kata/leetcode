@@ -1,4 +1,8 @@
 #
+# You must solve the problem without using any built-in functions
+#
+
+#
 # Quick Sort
 #
 # @param {Integer[]} nums
@@ -44,4 +48,48 @@ def sort_array(nums)
     end
 
     sorted
+end
+
+
+#
+# Merge Sort
+#
+def sort_array(nums)
+    merge_sort(nums)
+end
+
+def merge_sort(arr, left = 0, right = arr.length-1)
+    return arr if left == right
+
+    mid = (left + right)/2
+    left_sorted = merge_sort(arr[left..mid])
+    right_sorted = merge_sort(arr[mid+1..right])
+    merge(left_sorted, right_sorted)
+end
+
+def merge(left, right)
+    arr = []
+    
+    i = j = 0
+    while i < left.length && j < right.length
+        if left[i] <= right[j]
+            arr << left[i]
+            i += 1
+        else
+            arr << right[j]
+            j += 1
+        end
+    end
+
+    while i < left.length
+        arr << left[i]
+        i += 1
+    end
+
+    while j < right.length
+        arr << right[j]
+        j += 1
+    end
+
+    arr
 end
