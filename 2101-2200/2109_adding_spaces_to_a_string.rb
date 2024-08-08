@@ -2,16 +2,17 @@
 # @param {Integer[]} spaces
 # @return {String}
 def add_spaces(s, spaces)
-    modiffied_str = ''
+    space = ' '.freeze
+    modified_str = ''
     i = j = 0
     while i < s.length
         if i == spaces[j]
-            modiffied_str << ' '
+            modified_str << space
             j += 1
         end
-        modiffied_str << s[i]
+        modified_str << s[i]
         i += 1
     end
 
-    modiffied_str
+    modified_str
 end
