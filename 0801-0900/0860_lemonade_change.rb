@@ -22,3 +22,27 @@ def lemonade_change(bills)
 
     true
 end
+
+# no need hash
+def lemonade_change(bills)
+    five = ten = 0
+    bills.each { |bill|
+        if bill == 5
+            five += 1
+        elsif bill == 10
+            ten += 1
+            five -= 1
+        else # 20 will nerver be used for exchange
+            if ten > 0
+                ten -= 1
+                five -= 1
+            else
+                five -= 3
+            end
+        end
+
+        return false if five < 0        
+    }
+
+    true
+end
