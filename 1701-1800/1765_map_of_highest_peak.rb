@@ -1,32 +1,36 @@
 # @param {Integer[][]} is_water
 # @return {Integer[][]}
 def highest_peak(is_water)
-    r = is_water.size
-    c = is_water[0].size
-    result = Array.new(r) { Array.new(c, Float::INFINITY) }
-    
+    rows = is_water.size
+    cols = is_water[0].size
+    heights = Array.new(rows) { Array.new(cols, Float::INFINITY) }
+
     queue = []
-    (0...r).each { |i|
-        (0...c).each { |j|
-            if is_water[i][j] == 1
-                result[i][j] = 0
-                queue << [i, j]
+    (0...rows).each { |r|
+        (0...cols).each { |c|
+            if is_water[r][c] == 1
+                queue << [r, c]
+                heights[r][c] = 0
             end
         }
     }
 
-    directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+    directions = [[-1,0],[1,0],[0,-1],[0,1]].freeze
+    current_height = 0
     until queue.empty?
-        i, j = queue.shift
-        directions.each { |dr, dc|
-            _i = i + dr
-            _j = j + dc
-            next if _i < 0 || _i >= r || _j < 0 || _j >= c
-
-            queue << [_i, _j] if result[_i][_j] == Float::INFINITY
-            result[_i][_j] = [result[_i][_j], result[i][j] + 1].min
-        }
+        queue.size.times do
+            r, c = queue.shift
+            directions.each { |dr, dc|
+                new_r = r + dr
+                new_c = c + dc
+                if new_r >= 0 && new_r < rows && new_c >= 0 && new_c < cols && heights[new_r][new_c] == Float::INFINITY
+                    queue << [new_r, new_c]
+                    heights[new_r][new_c] = current_height + 1
+                end
+            }
+        end
+        current_height += 1
     end
 
-    result
+    heights
 end
