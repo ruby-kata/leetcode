@@ -40,7 +40,7 @@ def topological_sort(n, adj)
     order = []
     queue = (1..n).select { |i| indegrees[i].zero? }
     until queue.empty?
-        u = queue.pop
+        u = queue.shift
         order.push(u)
         adj[u].each { |v|
             indegrees[v] -= 1
